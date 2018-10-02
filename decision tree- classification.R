@@ -8,6 +8,7 @@ head(titanic)
 names(titanic)
 data = titanic[,c(2,3,5,6,7)]  #select few columns only
 head(data)
+nrow(data)
 
 #load libraries
 library(rpart)
@@ -19,13 +20,14 @@ fit
 rpart.plot(fit, extra = 106, cex=.8,nn=T)  #plot
 
 printcp(fit) #select complexity parameter
-prunetree2 = prune(fit, cp=.014)
+prunetree2 = prune(fit, cp=.1)
 rpart.plot(prunetree2, cex=.8,nn=T)
 prunetree2
 nrow(data)
 
 #Predict class category or probabilities
-(testdata = sample_n(data,2))
+library(dplyr)
+(testdata = sample_n(data,5))
 predict(prunetree2, newdata=testdata, type='class')
 predict(prunetree2, newdata=testdata, type='prob')
 
